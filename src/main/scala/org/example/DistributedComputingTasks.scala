@@ -4,13 +4,13 @@ import org.apache.spark.sql.SaveMode
 import org.apache.spark.rdd.RDD
 
 object DistributedComputingTasks {
-  def main(args: Array[String] , x:Int): Unit = {
+  def main(args: Array[String] ): Unit = {
 
     // i assume that array contain the path to the file in the order of dataset A, B and C is the output
     val dataset_a = args(0)
     val dataset_b = args(1)
     val dataset_c = args(2)
-    val limit_x = x // i assume that the limit is 10 as stated in the document
+    val limit_x = args(3).toInt
 
     val spark = SparkSession.builder()
       .master("local[*]")
