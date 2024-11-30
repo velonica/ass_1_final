@@ -24,13 +24,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'  # Use 'temurin' for JDK
 
-      # Install sbt (Scala build tool) from the official repository
+      # Install sbt (Scala build tool) from the correct repository
       - name: Install sbt
         run: |
           echo "Installing sbt..."
-          # Add the official sbt repository
-          echo "deb https://repo.scala-sbt.org/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-          curl -sL https://keybase.io/sbt/bundle/sbt.asc | gpg --dearmor | sudo tee /usr/share/keyrings/sbt-archive-keyring.gpg > /dev/null
+          # Add the correct sbt repository
+          echo "deb https://dl.cloudsmith.io/public/sbt/sbt-debian-deb/stable/debian/ /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+          curl -sL https://dl.cloudsmith.io/public/sbt/sbt-debian-deb/gpg.7D51A7D8.key | gpg --dearmor | sudo tee /usr/share/keyrings/sbt-archive-keyring.gpg > /dev/null
           sudo apt-get update
           sudo apt-get install sbt
 
