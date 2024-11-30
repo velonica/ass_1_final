@@ -24,12 +24,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'  # Use 'temurin' for JDK
 
-      # Install sbt (Scala build tool)
+      # Install sbt (Scala build tool) from the official repository
       - name: Install sbt
         run: |
           echo "Installing sbt..."
-          echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 642AC823
+          # Add the official sbt repository
+          echo "deb https://repo.scala-sbt.org/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+          curl -sL https://keybase.io/sbt/bundle/sbt.asc | gpg --dearmor | sudo tee /usr/share/keyrings/sbt-archive-keyring.gpg > /dev/null
           sudo apt-get update
           sudo apt-get install sbt
 
@@ -37,21 +38,14 @@ jobs:
       - name: Resolve sbt dependencies
         run: sbt update
 
-      # Build the project and print sbt logs for debugging
+      # Build the project
       - name: Build project
-        run: |
-          sbt clean compile
-          sbt --error  # This will print detailed error logs if something goes wrong
+        run: sbt clean compile
 
-      # Run the Scala application with the specified dataset paths and provide debugging output
+      # Run the Scala application with the specified dataset paths
       - name: Run Scala application
         run: |
-          echo "Running the Scala application with dataset paths:"
-          echo "src/test/dataset_a/dataset_a.parquet"
-          echo "src/test/dataset_b/dataset_b.parquet"
-          echo "src/test/dataset_c/dataset_c.parquet"
           sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10" || exit 1
-        continue-on-error: false  # This will stop the workflow if the command fails
 
       # Optionally, upload the output (parquet file) as an artifact for debugging
       - name: Upload result
