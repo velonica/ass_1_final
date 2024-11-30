@@ -9,3 +9,5 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-sql" % "3.3.2",   // Apache Spark SQL library
   "org.apache.spark" %% "spark-hive" % "3.3.2"   // Optional: Spark Hive support if needed
 )
+
+mainClass in Compile := Some("org.example.DistributedComputingTasks") 
