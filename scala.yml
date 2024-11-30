@@ -35,11 +35,11 @@ jobs:
 
       # Run the Scala application, passing the necessary arguments 
       - name: Run Scala application
-        run: sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10"
+        run: sbt "run src/main/scala/org/example/DistributedComputingTasks.scala /src/test/dataset_a/dataset_a.parquet /src/test/dataset_b/dataset_b.parquet /src/test/dataset_c/dataset_c.parquet 10"
 
       - name: Upload result
         uses: actions/upload-artifact@v3
         with:
           name: parquet-output
-          path: src/test/dataset_c/dataset_c.parquet # Make sure this matches the path of your dataset C
+          path: /src/test/dataset_c/dataset_c.parquet # Make sure this matches the path of your dataset C
 
