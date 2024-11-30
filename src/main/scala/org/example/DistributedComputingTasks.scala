@@ -10,13 +10,8 @@ object DistributedComputingTasks {
     val dataset_a = args(0)
     val dataset_b = args(1)
     val dataset_c = args(2)
-    val limit_x = try {
-      args(3).toInt  // Convert the 4th argument (x) to an integer
-    } catch {
-      case e: Exception =>
-        println("Error: Invalid limit value, should be an integer.")
-        sys.exit(1)  // Exit with error code
-    }
+    val limit_x = args(3).toInt  // Convert the 4th argument (x) to an integer
+  
 
     val spark = SparkSession.builder()
       .master("local[*]")
