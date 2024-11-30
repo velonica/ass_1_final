@@ -1,6 +1,7 @@
 # version use 
 - spark version :3.3.2
 - scala version: 2.12.10
+- SDKMAN need to be install 
 
 # scalastyle 
 Using intellij to develop scala code. 
