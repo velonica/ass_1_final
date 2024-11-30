@@ -1,7 +1,6 @@
 
 name: Scala CI Pipeline
 
-# Trigger the workflow on push or pull request to main branch
 on:
   push:
     branches:
@@ -15,31 +14,36 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'
-          
-      - name: Set up sbt
-        uses: olafurpg/setup-scala@v11
-        with:
-          scala-version: '2.12.10' 
-          sbt-version: '1.5.5'  # Adjust sbt version if needed
+          distribution: 'temurin'  # Use 'temurin' for JDK
 
-      # Install project dependencies and build the project
+      - name: Install sbt
+        run: |
+          echo "Installing sbt..."
+          echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 642AC823
+          sudo apt-get update
+          sudo apt-get install sbt
+
+      - name: Resolve sbt dependencies
+        run: sbt update
+
       - name: Build project
         run: sbt clean compile
 
-      # Run the Scala application, passing the necessary arguments 
       - name: Run Scala application
-        run: sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10"
+        run: |
+          sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10" || exit 1
 
       - name: Upload result
         uses: actions/upload-artifact@v3
         with:
           name: parquet-output
-          path: src/test/dataset_c/dataset_c.parquet # Make sure this matches the path of your dataset C
+          path: src/test/dataset_c/dataset_c.parquet  # Update this path to the location of your dataset C
