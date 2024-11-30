@@ -1,34 +1,45 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
 
-name: Scala CI
+name: Scala CI Pipeline
 
+# Trigger the workflow on push or pull request to main branch
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
-
-permissions:
-  contents: read
+    branches:
+      - main
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up JDK 11
-      uses: actions/setup-java@v4
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: 'sbt'
-    - name: Run tests
-      run: sbt test
-      # Optional: This step uploads information to the GitHub dependency graph and unblocking Dependabot alerts for the repository
-    - name: Upload dependency graph
-      uses: scalacenter/sbt-dependency-submission@ab086b50c947c9774b70f39fc7f6e20ca2706c91
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adoptopenjdk'
+          
+      - name: Set up sbt
+        uses: olafurpg/setup-scala@v11
+        with:
+          scala-version: '2.12.10' 
+          sbt-version: '1.5.5'  # Adjust sbt version if needed
+
+      # Install project dependencies and build the project
+      - name: Build project
+        run: sbt clean compile
+
+      # Run the Scala application, passing the necessary arguments 
+      - name: Run Scala application
+        run: sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10"
+
+      - name: Upload result
+        uses: actions/upload-artifact@v3
+        with:
+          name: parquet-output
+          path: src/test/dataset_c/dataset_c.parquet # Make sure this matches the path of your dataset C
