@@ -30,10 +30,11 @@ class DistributedComputingTasksTest extends FlatSpec with BeforeAndAfter {
   val dataset_b = "src/test/dataset_b/dataset_b.parquet"
   val dataset_c = "src/test/dataset_c/dataset_c.parquet"
 
-  val args = Array(dataset_a, dataset_b, dataset_c)
+  
   val x = 10
+  val args = Array(dataset_a, dataset_b, dataset_c,x)
 
-  DistributedComputingTasks.main(args, x)
+  DistributedComputingTasks.main(args)
 
   val outputDF = spark.read.parquet(dataset_c)
 
