@@ -32,7 +32,7 @@ class DistributedComputingTasksTest extends FlatSpec with BeforeAndAfter {
 
   
   val x = 10
-  val args = Array(dataset_a, dataset_b, dataset_c,x)
+  val args = Array(dataset_a, dataset_b, dataset_c,x.toString)
 
   DistributedComputingTasks.main(args)
 
