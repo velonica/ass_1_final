@@ -17,12 +17,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Set up JDK 11 with the correct distribution
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
           java-version: '11'
           distribution: 'temurin'  # Use 'temurin' for JDK
 
+      # Install sbt (Scala build tool)
       - name: Install sbt
         run: |
           echo "Installing sbt..."
@@ -31,18 +33,29 @@ jobs:
           sudo apt-get update
           sudo apt-get install sbt
 
+      # Resolve sbt dependencies (this downloads the dependencies listed in your build.sbt)
       - name: Resolve sbt dependencies
         run: sbt update
 
+      # Build the project and print sbt logs for debugging
       - name: Build project
-        run: sbt clean compile
+        run: |
+          sbt clean compile
+          sbt --error  # This will print detailed error logs if something goes wrong
 
+      # Run the Scala application with the specified dataset paths and provide debugging output
       - name: Run Scala application
         run: |
+          echo "Running the Scala application with dataset paths:"
+          echo "src/test/dataset_a/dataset_a.parquet"
+          echo "src/test/dataset_b/dataset_b.parquet"
+          echo "src/test/dataset_c/dataset_c.parquet"
           sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10" || exit 1
+        continue-on-error: false  # This will stop the workflow if the command fails
 
+      # Optionally, upload the output (parquet file) as an artifact for debugging
       - name: Upload result
         uses: actions/upload-artifact@v3
         with:
           name: parquet-output
-          path: src/test/dataset_c/dataset_c.parquet  # Update this path to the location of your dataset C
+          path: src/test/dataset_c/dataset_c.parquet  # Path to the output dataset
