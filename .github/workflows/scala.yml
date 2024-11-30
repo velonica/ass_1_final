@@ -42,7 +42,7 @@ jobs:
       # Run the Scala application with the specified dataset paths
       - name: Run Scala application
         run: |
-          sbt "run src/main/scala/org/example/DistributedComputingTasks.scala src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10" || exit 1
+          sbt "run src/test/dataset_a/dataset_a.parquet src/test/dataset_b/dataset_b.parquet src/test/dataset_c/dataset_c.parquet 10" || exit 1
 
       # Optionally, upload the output (parquet file) as an artifact for debugging
       - name: Upload result
