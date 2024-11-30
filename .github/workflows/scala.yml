@@ -46,7 +46,7 @@ jobs:
 
       # Optionally, upload the output (parquet file) as an artifact for debugging
       - name: Upload result
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: parquet-output
           path: src/test/dataset_c/dataset_c.parquet  # Path to the output dataset
