@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
       # Checkout repository
       - name: Checkout repository
@@ -24,15 +24,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'  # Use 'temurin' for JDK
 
-      # Install sbt (Scala build tool) from the correct repository
-      - name: Install sbt
+      # Install sbt using SDKMAN (a more reliable option)
+      - name: Install sbt using SDKMAN
         run: |
-          echo "Installing sbt..."
-          # Add the correct sbt repository
-          echo "deb https://dl.cloudsmith.io/public/sbt/sbt-debian-deb/stable/debian/ /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
-          curl -sL https://dl.cloudsmith.io/public/sbt/sbt-debian-deb/gpg.7D51A7D8.key | gpg --dearmor | sudo tee /usr/share/keyrings/sbt-archive-keyring.gpg > /dev/null
-          sudo apt-get update
-          sudo apt-get install sbt
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk install sbt
 
       # Resolve sbt dependencies (this downloads the dependencies listed in your build.sbt)
       - name: Resolve sbt dependencies
