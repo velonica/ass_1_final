@@ -33,7 +33,16 @@ dataset B: src/test/dataset_b
 dataset C: src/test/dataset_c 
 
 # test file dir 
-DistributedComputingTasksTest : src/test/scala/org/example/DistributedComputingTasksTest.scala
+DistributedComputingTasksTest: src/test/scala/org/example/DistributedComputingTasksTest.scala
 
 # Main file dir 
+DistributedComputingTasks: src/main/scala/org/example/DistributedComputingTasks.scala
+
+Input is array in the following order :
+- dataset A
+- dataset B
+- dataset C
+- limit X
+
+Output will be overwrite dataset C. 
 
