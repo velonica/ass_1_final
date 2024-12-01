@@ -28,9 +28,10 @@ empty because no file is ignore
 is under main laberl as Distributed Computing Tasks question I.md and Distributed Computing Tasks question J.md 
 
 # Dataset dir
-dataset A: src/test/dataset_a 
+dataset A: src/test/dataset_a
 dataset B: src/test/dataset_b
 dataset C: src/test/dataset_c 
+Do upload the dataset into the dir and name it base on dataset_X.parquet ( where X refer to a,b and c base on the dir) 
 
 # test file dir 
 DistributedComputingTasksTest: src/test/scala/org/example/DistributedComputingTasksTest.scala
