@@ -27,4 +27,9 @@ empty because no file is ignore
 # Distributed Computing Tasks I question I and J 
 is under main laberl as Distributed Computing Tasks question I.md and Distributed Computing Tasks question J.md 
 
+# Dataset dir
+dataset A: src/test/dataset_a 
+dataset B: src/test/dataset_b
+dataset C: src/test/dataset_c 
+
 
