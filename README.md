@@ -32,4 +32,8 @@ dataset A: src/test/dataset_a
 dataset B: src/test/dataset_b
 dataset C: src/test/dataset_c 
 
+# test file dir 
+DistributedComputingTasksTest : src/test/scala/org/example/DistributedComputingTasksTest.scala
+
+# Main file dir 
 
