@@ -21,7 +21,6 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'  
-          cache: 'sbt'
 
       - name: Install sbt using SDKMAN
         run: |
