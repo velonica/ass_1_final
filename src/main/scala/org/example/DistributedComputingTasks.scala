@@ -82,6 +82,6 @@ object DistributedComputingTasks {
     val result = sortedRdd.take(limit_x)
 
     val resultDF = result.toSeq.toDF("geographical_location", "item_rank","item_name")
-    resultDF.write.mode("Overwrite").parquet(dataset_c)
+    resultDF.write.mode(SaveMode.Overwrite).parquet(dataset_c)
   }
 }
